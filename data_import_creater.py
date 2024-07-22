@@ -3,7 +3,7 @@ import io
 import os
 
 
-# Define a constant for the default encoding
+# Constant for the default encoding
 DEFAULT_ENCODING = 'Windows-1250'
 
 # Clean the DataFrame by removing double quotes and replacing semicolons - přendat do kontrol a vybrat znaky na odmazání??
@@ -88,7 +88,7 @@ def process_file(input_path, output_name, encoding=DEFAULT_ENCODING):
         print(f'Skipping file {input_path} due to loading issues.')
 
 
-# Function to select encoding
+# Select encoding of import csv file
 def select_encoding():
     print("Select the encoding for the output CSV file:")
     print("1. utf-8")

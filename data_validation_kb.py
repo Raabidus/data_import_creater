@@ -3,6 +3,9 @@ import os
 import data_import_creater as dic
 
 
+# TO-DO
+    #  otestovat - přidat do asset "chyná data a spustit"
+
 # Check for duplicates and missing IDs
 # Generate the validation report
 # Save the valid entries to a new CSV file
