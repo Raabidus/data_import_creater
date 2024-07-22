@@ -1,0 +1,8 @@
+# ignore docs
+/docs
+
+# ignore import created by scrip
+/generated_import
+
+# ignore created imports
+/kb_imports
