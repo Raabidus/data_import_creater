@@ -4,7 +4,9 @@ import data_import_creater as dic
 
 
 # TO-DO
-    #  otestovat - přidat do asset "chyná data a spustit"
+    # otestovat - přidat do asset "chyná data a spustit"
+    # kontroly budovy - csv s budovami z minulého roku x nové budovy - přidat do importu nakonec?
+    # kontroly místnosti
 
 # Check for duplicates and missing IDs
 # Generate the validation report
@@ -61,5 +63,3 @@ def asset_validation():
 
     except Exception as e:
         print(f"An error occurred during asset validation: {str(e)}")
-
-asset_validation()
