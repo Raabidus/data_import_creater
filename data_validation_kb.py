@@ -11,6 +11,8 @@ import data_import_creater as dic
 # Check for duplicates and missing IDs
 # Generate the validation report
 # Save the valid entries to a new CSV file
+
+
 def asset_validation():
     try:
         output_folder = os.path.join(os.path.dirname(__file__), 'kb_imports')
