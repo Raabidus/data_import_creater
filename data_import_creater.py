@@ -2,6 +2,8 @@ import pandas as pd
 import io
 import os
 
+# TO-DO
+# Přesunout "tools" z dic do tools.py select encoding, load_file, default_encoding
 
 # Constant for the default encoding
 DEFAULT_ENCODING = 'Windows-1250'
