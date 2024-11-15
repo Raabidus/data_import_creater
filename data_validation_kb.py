@@ -1,4 +1,5 @@
 import pandas as pd
+from io import StringIO
 import os
 import data_import_creater as dic
 
@@ -22,6 +23,37 @@ def load_csv(file_path):
     except Exception as e:
         print(f"An unexpected error occurred while loading {file_path}: {e}")
     return None
+
+def load_xlsx(file_path):
+
+    """Load an XLSX file, convert it to CSV, and handle potential errors."""
+    try:
+        # Load the Excel file
+        df = pd.read_excel(file_path)
+        print(f"XLSX file {file_path} loaded successfully.")
+        
+        # # Save as CSV
+        xlsx_to_csv = df.to_csv(encoding=dic.DEFAULT_ENCODING, sep=';', index=False)
+
+        csv_df = pd.read_csv(StringIO(xlsx_to_csv), encoding=dic.DEFAULT_ENCODING, sep=';')
+
+        print("Dumb Data Sample:")
+        print(csv_df.head())
+        print("Dumb Data Columns:")
+        print(csv_df.columns)  # Print column names for debugging
+        # print(xlsx_to_csv)
+
+        return csv_df
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+    # except pd.errors.ExcelFileError as e:
+    #     print(f"Error processing the XLSX file {file_path}: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred while loading {file_path}: {e}")
+    return None
+
+
+
 
 def convert_csv_delimiter(input_file_path):
     """Convert a CSV file from comma to semicolon as a delimiter."""
@@ -140,46 +172,57 @@ def buildings_validation():
 
 
 def rooms_validation():
-    """Validate rooms data and update with new rooms if found.
-    Rooms from dumb x rooms from ALL-data"""
+    """Validate rooms data and update with new rooms if found."""
+    csc_mistnosti_rooms_file_path = input("Enter path to CSC_mistnosti file: ")
+    dumb_rooms_data_file_path = input("Enter path to last year db dumb data file: ")
 
-    all_data_rooms_file_path = input("Enter path to ALL-data file: ")
-    dumb_rooms_data_file_path = input("Enter path to last year db dumb data file:")
-
-    df_all_data = load_csv(all_data_rooms_file_path)
+    # Load the datasets
+    # output_csv_path = '/home/kral-martin/workspace/dantem/KomercniBanka/kb_imports'
+    df_csc_mistnosti = load_xlsx(csc_mistnosti_rooms_file_path)
     df_dumb_data = load_csv(dumb_rooms_data_file_path)
 
-    if df_all_data is None or df_dumb_data is None:
-        return
-    
-    if 'Místnost' not in df_all_data:
-        print("Error: Column 'Místnost' not found in the ALL-data file.")
-        return
-    if 'room' not in df_dumb_data:
-        print("Error: Columnt 'room' not found in the dumb data.")
-        return
+    print(df_csc_mistnosti.head())
+    print(df_csc_mistnosti.columns)
+    print('---------------')
+    print(df_dumb_data.head())
+    print(df_dumb_data.head)
 
-    # Identify new rooms
-    new_rooms = df_all_data[~df_all_data['Místnost'].isin(df_dumb_data['room'])]
+    if df_csc_mistnosti is None or df_dumb_data is None:
+        return None
+
+    # Ensure both required columns exist
+    if 'Místnost' not in df_csc_mistnosti.columns:
+        print("Error: Column 'Místnost' not found in the ALL-data file.")
+        return None
+    if 'room' not in df_dumb_data.columns:
+        print("Error: Column 'room' not found in the dumb data.")
+        return None
+
+    # Strip whitespaces and ensure both columns are strings for comparison
+    df_csc_mistnosti['Místnost'] = df_csc_mistnosti['Místnost'].str.strip().astype(str)
+    df_dumb_data['room'] = df_dumb_data['room'].str.strip().astype(str)
+
+    # Identify new rooms (rooms in ALL-data that are NOT in dumb_rooms_data)
+    new_rooms = df_csc_mistnosti[df_csc_mistnosti['Místnost'].isin(df_dumb_data['room'])]
 
     if new_rooms.empty:
-        print("No new rooms dound.")
+        print("No new rooms found.")
     else:
-        print(f"Found {len(new_rooms)} new buildings.")
+        print(f"Found {len(new_rooms)} new rooms.")
 
-        # Appedn to existing data
+        # Append only new rooms
         new_rooms_sorted = new_rooms.sort_values(by='Místnost')
         df_updated = pd.concat([df_dumb_data, new_rooms_sorted], ignore_index=True)
 
-        # Safe updated df
+        # Save updated DataFrame
         df_updated.to_csv(dumb_rooms_data_file_path, sep=';', encoding=dic.DEFAULT_ENCODING, index=False)
-        print(f"Updated rooms data saved to {dumb_rooms_data_file_path}")
+        print(f"Updated rooms data saved to {dumb_rooms_data_file_path}.")
 
-    # Generate a report for new buildings
+    # Generate a report for new rooms
     report_path = get_file_path('rooms_validation_report.txt')
     with open(report_path, 'w', encoding='utf-8') as report_file:
         if new_rooms.empty:
-            report_file.write("No new buildings found.\n")
+            report_file.write("No new rooms found.\n")
         else:
             report_file.write(f"Found {len(new_rooms)} new rooms:\n")
             report_file.write(new_rooms.to_string(index=False))
@@ -194,20 +237,22 @@ def rooms_validation():
     
 # Main execution
 if __name__ == "__main__":
-    # Example usage of convert_csv_delimiter
-    # input_csv_path = input("Enter the path to the input CSV file (with comma delimiter): ")
-    # convert_csv_delimiter(input_csv_path)
+#     # Example usage of convert_csv_delimiter
+#     # input_csv_path = input("Enter the path to the input CSV file (with comma delimiter): ")
+#     # convert_csv_delimiter(input_csv_path)
 
-    # Validate asset data
-    # print("Running asset validation...")
-    # asset_validation()
+#     # Validate asset data
+#     # print("Running asset validation...")
+#     # asset_validation()
     
-    # Validate buildings data
-    # print("\nRunning buildings validation...")
-    # buildings_validation()
+#     # Validate buildings data
+#     # print("\nRunning buildings validation...")
+#     # buildings_validation()
 
     # Validate rooms data
     print("validate rooms")
     rooms_validation()
 
-    print("\nValidation process completed.")
+    # print("\nValidation process completed.")
+# file_path = '/home/kral-martin/workspace/dantem/KomercniBanka/KB_2024/MISTNOSTI_CSC_20240924.xls'
+# load_xlsx(file_path)

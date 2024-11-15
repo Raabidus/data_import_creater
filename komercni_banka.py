@@ -4,7 +4,7 @@ import data_import_creater as dic
 #TO-DO
     # když bude už import existovat - vypsat upozrnení a nabídnou možnst přepsání, nebo uložení pod novým názvem
 
-# ASI ZBYTEČNÉ - BUDOVY JSOU Z POSLEDNÍ INV A NÁSLEDNĚ SE ŘEŠÍ VALIDACE BUDOVY Z MINULÉ INV VS id BUDOOVY V ALL-data
+# ASI ZBYTEČNÉ - BUDOVY JSOU Z POSLEDNÍ INV A NÁSLEDNĚ SE ŘEŠÍ VALIDACE BUDOVY Z MINULÉ INV VS id BUDOOVY V ALL-data vs BUDOVY Z MISTNOSTI_CSC SOUBORY Z KB
 # def buildings_import(df):
 #     try:
 #         columns_to_include = ['building', 'adress'] # DOPLNIT

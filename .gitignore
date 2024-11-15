@@ -11,4 +11,5 @@
 /KB_2024
 
 # ignore pycache
-/__pycache__
+/__pycache__*.pyc
+__pycache__/
