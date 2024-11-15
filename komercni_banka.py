@@ -4,27 +4,28 @@ import data_import_creater as dic
 #TO-DO
     # když bude už import existovat - vypsat upozrnení a nabídnou možnst přepsání, nebo uložení pod novým názvem
 
+# ASI ZBYTEČNÉ - BUDOVY JSOU Z POSLEDNÍ INV A NÁSLEDNĚ SE ŘEŠÍ VALIDACE BUDOVY Z MINULÉ INV VS id BUDOOVY V ALL-data
+# def buildings_import(df):
+#     try:
+#         columns_to_include = ['building', 'adress'] # DOPLNIT
+#         output_folder = os.path.join(os.path.dirname(__file__), 'kb_imports')
+#         os.makedirs(output_folder, exist_ok=True)
+#         output_path = os.path.join(output_folder, '02_buildings.csv')
+#         dic.create_csv(df, output_path, columns_to_include, dic.DEFAULT_ENCODING)
+#     except Exception as e:
+#         print(f"An error occurred during rooms buildings: {str(e)}")
 
-def buildings_import(df):
-    try:
-        columns_to_include = [] # DOPLNIT
-        output_folder = os.path.join(os.path.dirname(__file__), 'kb_imports')
-        os.makedirs(output_folder, exist_ok=True)
-        output_path = os.path.join(output_folder, '02_buildings.csv')
-        dic.create_csv(df, output_path, columns_to_include, dic.DEFAULT_ENCODING)
-    except Exception as e:
-        print(f"An error occurred during rooms buildings: {str(e)}")
-    pass
 
-def rooms_import(df):
-    try:
-        columns_to_include = ['Číslo budovy', 'Popis místnosti', 'Zvyk.kód místn.', 'Lokalita'] # DOPLNIT
-        output_folder = os.path.join(os.path.dirname(__file__), 'kb_imports')
-        os.makedirs(output_folder, exist_ok=True)
-        output_path = os.path.join(output_folder, '03_rooms.csv')
-        dic.create_csv(df, output_path, columns_to_include, dic.DEFAULT_ENCODING)
-    except Exception as e:
-        print(f"An error occurred during rooms import: {str(e)}")
+# Stejně jako u budov
+# def rooms_import(df):
+#     try:
+#         columns_to_include = ['Číslo budovy', 'Popis místnosti', 'Zvyk.kód místn.', 'Lokalita'] # DOPLNIT
+#         output_folder = os.path.join(os.path.dirname(__file__), 'kb_imports')
+#         os.makedirs(output_folder, exist_ok=True)
+#         output_path = os.path.join(output_folder, '03_rooms.csv')
+#         dic.create_csv(df, output_path, columns_to_include, dic.DEFAULT_ENCODING)
+#     except Exception as e:
+#         print(f"An error occurred during rooms import: {str(e)}")
 
 def asset_import(df):
     try:

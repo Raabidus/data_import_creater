@@ -9,6 +9,7 @@ def main():
     print("Select an operation:")
     print("1. Data Import Creator")
     print("2. Data Validation")
+    print("3. Convert csv to delimetet")
     choice = input("Enter the number corresponding to your choice: ")
 
     if choice == '1':
@@ -44,7 +45,6 @@ def main():
                 elif export_choice == '3':
                     kb.asset_import(df)
                 elif export_choice == '9':
-                    kb.buildings_import(df)
                     kb.rooms_import(df)
                     kb.asset_import(df)
                 else:
@@ -57,14 +57,21 @@ def main():
         print("Select a validation type:")
         print("1. KB Asset Validation")
         print("2. KB Buildings Validation")
+        print("3. KB Rooms Validations")
         validation_choice = input("Enter the number corresponding to your choice: ")
 
         if validation_choice == '1':
             dvkb.asset_validation()  # Call the asset validation function
         elif validation_choice == '2':
             dvkb.buildings_validation()  # Call the buildings validation function
+        elif validation_choice == '3':
+            dvkb.rooms_validation() # Caall the rooms validation function
         else:
             print("Invalid choice. Please run the script again and select a valid option.")
+
+    elif choice == '3':
+        dvkb.convert_csv_delimiter(input_file_path=input("Input file path to csv: "))
+    
     else:
         print("Invalid choice. Please run the script again and select a valid option.")
 

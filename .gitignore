@@ -6,3 +6,9 @@
 
 # ignore created imports
 /kb_imports
+
+# ignore real KB data
+/KB_2024
+
+# ignore pycache
+/__pycache__
